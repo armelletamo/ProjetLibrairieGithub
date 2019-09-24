@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ProjetLibrairie
+namespace ProjetLibrairie.ExceptionHandler
 {
     public class NotEnoughInventoryException : Exception
     {

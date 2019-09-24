@@ -5,14 +5,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProjetLibrairie.ExceptionHandler;
 using ProjetLibrairie.Models;
 using ProjetLibrairie.Services.Interfaces;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace ProjetLibrairie
+namespace ProjetLibrairie.Controllers
 {
-    [Route("librairie")]
+   // [Route("librairie")]
     public class LibrairieController : Controller
         
     {
@@ -22,9 +23,15 @@ namespace ProjetLibrairie
             _librairieService = store;
         }
 
-      
+        [HttpGet]
+       // [Route("index")]
+        public IActionResult Index()
+        {
+            return View("UpLoadFile");
+        }
+
         [HttpPost]
-        [Route("load")]
+        //[Route("load")]
         public void LoadJsonFile(IFormFile files)
         {
             string result = "";
@@ -43,7 +50,7 @@ namespace ProjetLibrairie
         }
 
         [HttpGet]
-        [Route("getquantity")]
+        //[Route("getquantity")]
         public int GetQuantity(string name)
         {
             int quantity=_librairieService.Quantity(name);
@@ -51,7 +58,7 @@ namespace ProjetLibrairie
         }
 
         [HttpPost]
-        [Route("Buy")]
+        //[Route("Buy")]
         [ProducesResponseType(typeof(double), 200)]
         [ProducesResponseType(typeof(List<INameQuantity>), 400)]
         public IActionResult GetPrice([FromBody] BooksVM bookNames)
