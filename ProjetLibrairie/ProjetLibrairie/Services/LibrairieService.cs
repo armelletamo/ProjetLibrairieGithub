@@ -65,6 +65,7 @@ namespace ProjetLibrairie.Services
         {
             Librairie = JsonConvert.DeserializeObject<LibrairieVM>(catalogAsJson);
             _libraryRepository.InitializeRepo(Librairie.Catalog, Librairie.Category);
+            
         }
 
         public int Quantity(string name)

@@ -13,52 +13,53 @@ using ProjetLibrairie.Services.Interfaces;
 
 namespace ProjetLibrairie.Controllers
 {
-   // [Route("librairie")]
+    [Route("librairie")]
     public class LibrairieController : Controller
-        
+
     {
+
+
         private readonly IStore _librairieService;
         public LibrairieController(IStore store)
         {
             _librairieService = store;
         }
 
-        [HttpGet]
-       // [Route("index")]
-        public IActionResult Index()
-        {
-            return View("UpLoadFile");
-        }
 
         [HttpPost]
-        //[Route("load")]
-        public void LoadJsonFile(IFormFile files)
+        [Route("load")]
+        public IActionResult LoadJsonFile(IFormFile file)
         {
             string result = "";
-            if (files.FileName.EndsWith("json") && files.ContentType== "application/json")
+            LibrairieVM MyLibrairy = new LibrairieVM();
+            if (!file.FileName.EndsWith("json") && file.ContentType != "application/json")
             {
-                byte[] content;
-                using (var ms = new MemoryStream())
-                {
-                    files.CopyTo(ms);
-                    content = ms.ToArray();
-                }
-                result = System.Text.Encoding.UTF8.GetString(content);
-            }
 
+                return BadRequest();
+            }
+            byte[] content;
+            using (var ms = new MemoryStream())
+            {
+                file.CopyTo(ms);
+                content = ms.ToArray();
+            }
+            result = System.Text.Encoding.UTF8.GetString(content);
             _librairieService.Import(result);
+            return Ok();
         }
 
+
         [HttpGet]
-        //[Route("getquantity")]
+        [Route("getquantity")]
         public int GetQuantity(string name)
         {
-            int quantity=_librairieService.Quantity(name);
+            int quantity = _librairieService.Quantity(name);
             return quantity;
+
         }
 
         [HttpPost]
-        //[Route("Buy")]
+        [Route("Buy")]
         [ProducesResponseType(typeof(double), 200)]
         [ProducesResponseType(typeof(List<INameQuantity>), 400)]
         public IActionResult GetPrice([FromBody] BooksVM bookNames)
@@ -68,11 +69,11 @@ namespace ProjetLibrairie.Controllers
                 double price = _librairieService.Buy(bookNames.BookNames);
                 return Ok(price);
             }
-            catch(NotEnoughInventoryException ex)
+            catch (NotEnoughInventoryException ex)
             {
-               return BadRequest(ex.Missing.ToList());
+                return BadRequest(ex.Missing.ToList());
             }
         }
     }
-    
+
 }

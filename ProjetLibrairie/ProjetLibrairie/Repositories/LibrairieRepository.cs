@@ -14,6 +14,7 @@ namespace ProjetLibrairie.Repositories
 
         public void InitializeRepo(List<Book> catalog, List<Category> category)
         {
+            //creation de la base de donnée
             Category = category;
             Catalog = catalog;
         }
