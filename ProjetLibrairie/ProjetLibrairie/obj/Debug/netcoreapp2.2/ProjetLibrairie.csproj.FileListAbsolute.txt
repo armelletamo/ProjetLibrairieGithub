@@ -35,4 +35,3 @@ C:\Users\Cedric\Desktop\ProjetLibrairieGithub\ProjetLibrairie\ProjetLibrairie\ob
 C:\Users\Cedric\Desktop\ProjetLibrairieGithub\ProjetLibrairie\ProjetLibrairie\obj\Debug\netcoreapp2.2\ProjetLibrairie.pdb
 C:\Users\Cedric\Desktop\ProjetLibrairieGithub\ProjetLibrairie\ProjetLibrairie\obj\Debug\netcoreapp2.2\ProjetLibrairie.csproj.CopyComplete
 C:\Users\Cedric\Desktop\ProjetLibrairieGithub\ProjetLibrairie\ProjetLibrairie\obj\Debug\netcoreapp2.2\ProjetLibrairie.csprojAssemblyReference.cache
-C:\Users\Cedric\Desktop\ProjetLibrairieGithub\ProjetLibrairie\ProjetLibrairie\obj\Debug\netcoreapp2.2\Razor\Views\_ViewImports.g.cshtml.cs

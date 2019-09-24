@@ -18,13 +18,13 @@ namespace ProjetLibrairie.Services
     public class LibrairieService : IStore
     {
         private LibrairieVM Librairie;
-        Book LibrairieBook;
+        Orders LibrairieBook;
         private ILibrairieRepository _libraryRepository;
         private List<INameQuantity> nonAvailableBookName;
 
         public LibrairieService(ILibrairieRepository lib)
         {
-            LibrairieBook = new Book();
+            LibrairieBook = new Orders();
             nonAvailableBookName = new List<INameQuantity>();
             _libraryRepository = lib;
         }
@@ -36,26 +36,10 @@ namespace ProjetLibrairie.Services
 
             if (basketByNames.Length != 0)
             {
-                //prix quand il y a un seul livre
-                if (basketByNames.Length == 1)
-                {
-                    LibrairieBook = FindBookByName(basketByNames[0]);
-                    if (LibrairieBook != null)
-                    {
-                        price = LibrairieBook.Price;
-                        UpdateCatalog(bookDictionnary);
-                        return price;
-                    }
-                }
-                //prix quand il y a plusieurs livres
-                else
-                {
-                    IEnumerable<IGrouping<string, Orders>> ListOfBookByCategory = ConstructBookFromName(basketByNames, bookDictionnary).GroupBy(x => x.Book.Category);
-                    price = PriceWhenDifferentCategoryAndManyQuantity(ListOfBookByCategory);
-                    UpdateCatalog(bookDictionnary);
-                    return price;
-
-                }
+                IEnumerable<IGrouping<string, Orders>> ListOfBookByCategory = ConstructBookFromName(basketByNames, bookDictionnary).GroupBy(x => x.Book.Category);
+                price = PriceWhenDifferentCategoryAndManyQuantity(ListOfBookByCategory);
+                UpdateCatalog(bookDictionnary);
+                return price;
             }
 
             return price;
@@ -65,16 +49,16 @@ namespace ProjetLibrairie.Services
         {
             Librairie = JsonConvert.DeserializeObject<LibrairieVM>(catalogAsJson);
             _libraryRepository.InitializeRepo(Librairie.Catalog, Librairie.Category);
-            
+
         }
 
         public int Quantity(string name)
         {
             int quantity = 0;
 
-            LibrairieBook = FindBookByName(name);
+            LibrairieBook.Book = FindBookByName(name);
             if (LibrairieBook != null)
-                quantity = LibrairieBook.Quantity;
+                quantity = LibrairieBook.Book.Quantity;
 
             return quantity;
         }
@@ -122,13 +106,16 @@ namespace ProjetLibrairie.Services
             return items;
         }
 
-        private void CheckQuantityOrder(Orders nonAvailableBook)
+        private bool CheckQuantityOrder(Orders nonAvailableBook)
         {
             //vérification s'il y'a assez de livre disponible par rapport à la commande
+
             if (nonAvailableBook.QuantityOrder > nonAvailableBook.Book.Quantity)
             {
                 nonAvailableBookName.Add(nonAvailableBook.Book);
+                return false;
             }
+            return true;
         }
 
         private void UpdateCatalog(Dictionary<string, int> bookDictionnary)
