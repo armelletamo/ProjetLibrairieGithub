@@ -57,7 +57,7 @@ namespace ProjetLibrairie.Services
             int quantity = 0;
 
             LibrairieBook.Book = FindBookByName(name);
-            if (LibrairieBook != null)
+            if (LibrairieBook.Book != null)
                 quantity = LibrairieBook.Book.Quantity;
 
             return quantity;

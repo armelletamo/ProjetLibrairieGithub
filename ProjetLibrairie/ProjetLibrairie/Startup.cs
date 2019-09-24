@@ -31,11 +31,7 @@ namespace ProjetLibrairie
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute("default", "{controller}/{action}/{id?}", new { controller = "Librairie", action = "Index" });
-
-            });
+            app.UseMvc();
         }
     }
 }

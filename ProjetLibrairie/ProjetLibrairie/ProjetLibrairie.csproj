@@ -12,4 +12,6 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties CatalogAsJson_1json__JSONSchema="http://json.schemastore.org/ansible-stable-2.7" /></VisualStudio></ProjectExtensions>
+
 </Project>

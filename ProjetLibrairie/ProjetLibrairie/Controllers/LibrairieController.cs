@@ -32,7 +32,7 @@ namespace ProjetLibrairie.Controllers
         {
             string result = "";
             LibrairieVM MyLibrairy = new LibrairieVM();
-            if (!file.FileName.EndsWith("json") && file.ContentType != "application/json")
+            if (file == null || !file.FileName.EndsWith(".json") || file.ContentType != "application/json")
             {
 
                 return BadRequest();
